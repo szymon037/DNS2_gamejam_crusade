@@ -22,9 +22,13 @@ public class PlayerShooting : MonoBehaviour
     public void Shoot() {
         if (shotTimer > 0f) return;
 
-        bool shotSuccessful = this.playerWeapon?.Shoot(this.shootPoint.position) ?? false;
+        bool shotSuccessful = this.playerWeapon?.Shoot(this.shootPoint.position, this.shootPoint.transform.forward) ?? false;
         if (!shotSuccessful) return;
 
         shotTimer = playerWeapon.shotSpeed;
+    }
+
+    public void RotateShootPoint(Quaternion rotation) {
+        this.shootPoint.localRotation = rotation;
     }
 }

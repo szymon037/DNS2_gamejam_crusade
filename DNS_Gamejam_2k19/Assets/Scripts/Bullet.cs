@@ -55,7 +55,11 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Car")) {
-            
+            var bulletOwnerID = this.owner.GetComponent<PlayerMovement>().id;
+            var otherID = other.gameObject.GetComponent<PlayerMovement>().id;
+            if (bulletOwnerID == otherID) return;
+            //deal damage, reclaim to pool, launch particles etc.
+            BulletPool.Reclaim(this.gameObject);
         }
     }
 }
