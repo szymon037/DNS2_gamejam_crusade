@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         MAIN_MENU,
+        CAR_SELECTION,
         GAME,
         CREDITS,
         END
@@ -33,6 +34,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if(CurrentState == GameState.END)
+        {
+            Application.Quit();
+        }
+
         SceneHandling();
     }
 
