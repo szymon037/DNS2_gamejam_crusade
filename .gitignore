@@ -34,3 +34,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+/DNS_Gamejam_2k19/Assets/Test1.unity
+/DNS_Gamejam_2k19/Assets/Test1.unity.meta
+/DNS_Gamejam_2k19/Assets/Test2.unity
+/DNS_Gamejam_2k19/Assets/Test2.unity.meta
