@@ -52,4 +52,10 @@ public class Bullet : MonoBehaviour
     public void SetOwner(GameObject owner) {
         this.owner = owner;
     }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Car")) {
+            
+        }
+    }
 }

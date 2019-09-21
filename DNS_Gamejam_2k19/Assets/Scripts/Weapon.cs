@@ -2,10 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Weapon 
+public class Weapon : MonoBehaviour
 {
     public float damage;
     public float bulletSpeed;
     public float shotSpeed;
-    public virtual void Shoot() {}
+    public AudioSource audioSource;
+
+    void Awake() {
+        audioSource = this.gameObject.GetComponent<AudioSource>();
+    }
+
+    public bool Shoot(Vector3 origin) {
+        GameObject bullet = BulletPool.Get();
+        if (bullet == null) return false;
+        Bullet bulletProperties = bullet.GetComponent<Bullet>();
+        bullet.transform.position = origin;
+        bulletProperties.SetOwner(this.gameObject);
+        bulletProperties.SetProperties(this.damage, this.bulletSpeed, this.transform.forward);
+        bullet.SetActive(true);
+        return true;
+    }
 }

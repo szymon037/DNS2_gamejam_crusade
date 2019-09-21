@@ -2,35 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Weapon))]
 public class PlayerShooting : MonoBehaviour
 {
-    
     public float shotTimer = 0f;
+    public Weapon playerWeapon;
+    public Transform shootPoint = null;
 
-    void Awake() { }
+    void Awake() { 
+        this.playerWeapon = this.gameObject.GetComponent<Weapon>();
+    }
 
     void Update() {
         if (shotTimer > 0f) {
             shotTimer -= Time.deltaTime;
         } 
-
-        if (Input.GetMouseButton(0)) {
-            this.Shoot();
-        }
     }
 
-    void Shoot() {
+    public void Shoot() {
         if (shotTimer > 0f) return;
-        GameObject bullet = BulletPool.Get();
-        Debug.Log((bullet == null).ToString());
-        if (bullet == null) return;
-        bullet.transform.position = this.transform.position;
-        Vector3 direction = this.transform.forward;
-        var bulletReference = bullet.GetComponent<Bullet>();
-        bulletReference.SetOwner(this.gameObject);
-        //temporary values
-        bulletReference.SetProperties(5f, 5f, this.transform.forward);
-        bullet.SetActive(true);
-        shotTimer = Constants.BASE_SHOT_TIMER;
+
+        bool shotSuccessful = this.playerWeapon?.Shoot(this.shootPoint.position) ?? false;
+        if (!shotSuccessful) return;
+
+        shotTimer = playerWeapon.shotSpeed;
     }
 }

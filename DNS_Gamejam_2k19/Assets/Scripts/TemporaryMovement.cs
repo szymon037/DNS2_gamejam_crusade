@@ -13,8 +13,9 @@ public class TemporaryMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
-        transform.Translate(new Vector3(x, 0f, z));
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Debug.Log("pressed space");
+            Camera.main.GetComponent<CameraShaker>().StartShaking();
+        }
     }
 }
