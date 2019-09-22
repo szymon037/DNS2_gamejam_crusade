@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public GameState CurrentState = GameState.MAIN_MENU;
     public string[] SceneNames;
 
-    static GameManager instance;
+    public static GameManager instance;
 
     public enum GameState
     {
@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
         CREDITS,
         END
     }
+
+    public static int GamepadCount;
+    public SpawnPlayers spawnPlayers;
 
     void Start()
     {
@@ -30,6 +33,8 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
+        var joystickCount = Input.GetJoystickNames().Length;
+        GamepadCount = joystickCount;
     }
 
     void Update()
@@ -39,6 +44,7 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
 
+
         SceneHandling();
     }
 
@@ -46,12 +52,24 @@ public class GameManager : MonoBehaviour
     {
         var ActualSceneName = SceneManager.GetActiveScene().name;
 
-        if (ActualSceneName != SceneNames[(int)CurrentState])
-        {
-            SceneManager.LoadScene(SceneNames[(int)CurrentState]);
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(SceneNames[(int)CurrentState]));
+        if (ActualSceneName == "CarSelection") {
+            FindSpawner();
+        }
 
-            //SceneManager.UnloadSceneAsync(ActualSceneName);
+        try {
+            if (ActualSceneName != SceneNames[(int)CurrentState])
+            {
+                SceneManager.LoadScene(SceneNames[(int)CurrentState]);
+               // SceneManager.SetActiveScene(SceneManager.GetSceneByName(SceneNames[(int)CurrentState]));
+
+                //SceneManager.UnloadSceneAsync(ActualSceneName);
+            }
+        } catch (System.IndexOutOfRangeException) {}
+    }
+
+    void FindSpawner() {
+        if (this.spawnPlayers == null) {
+            this.spawnPlayers = GameObject.FindGameObjectWithTag("PlayerSpawner").GetComponent<SpawnPlayers>();
         }
     }
 }

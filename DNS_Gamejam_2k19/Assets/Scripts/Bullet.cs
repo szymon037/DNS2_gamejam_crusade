@@ -59,6 +59,8 @@ public class Bullet : MonoBehaviour
             var otherID = other.gameObject.GetComponent<PlayerMovement>().id;
             if (bulletOwnerID == otherID) return;
             //deal damage, reclaim to pool, launch particles etc.
+            var playerMovement = other.gameObject.GetComponent<PlayerMovement>();
+            playerMovement.stats.ReduceHealth(this.damage);
             BulletPool.Reclaim(this.gameObject);
         }
     }

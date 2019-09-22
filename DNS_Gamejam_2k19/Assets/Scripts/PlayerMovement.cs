@@ -14,6 +14,10 @@ public class PlayerMovement : MonoBehaviour
     private string rightStickVertical;
     private string shootButton;
 
+    void OnDestroy() {
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +39,10 @@ public class PlayerMovement : MonoBehaviour
             shootingScript.Shoot();
         }
 
+        if (this.stats.health <= 0f) {
+            Die();
+        }
+
         Rotate();
     }
 
@@ -48,6 +56,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 direction = new Vector3(x, 0f, z);
         Quaternion rot = Quaternion.LookRotation(-direction, Vector3.up);
         shootingScript.RotateShootPoint(rot);
+    }
+
+    void Die() {
+        //Do something here, like releasing particles or sth
     }
 
 }

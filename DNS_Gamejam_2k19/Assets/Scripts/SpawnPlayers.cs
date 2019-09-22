@@ -51,7 +51,7 @@ public class SpawnPlayers : MonoBehaviour
         }
     }
 
-    bool ColorsEqual(Color c1, Color c2) {
+    public static bool ColorsEqual(Color c1, Color c2) {
         int r1, g1, b1;
         r1 = Mathf.RoundToInt((float)System.Math.Round((double)c1.r, 2) * 1000f);
         g1 = Mathf.RoundToInt((float)System.Math.Round((double)c1.g, 2) * 1000f) ;
@@ -63,6 +63,5 @@ public class SpawnPlayers : MonoBehaviour
         Debug.Log(string.Format("RGB: {0} {1} {2}", r1, g1, b1));
         Debug.Log(string.Format("RGB: {0} {1} {2}", r2, g2, b2));
         return (r1 == r2 && g1 == g2 && b1 == b2);
-
     }
 }
